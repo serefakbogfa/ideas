@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
@@ -26,14 +27,21 @@ Route::get('/ideas{idea}/edit', [IdeaController::class, 'edit'])->name('ideas.ed
 
 Route::put('/ideas{idea}', [IdeaController::class, 'update'])->name('ideas.update');
 
-
-
 Route::post('/idea', [IdeaController::class, 'store'])->name('idea.store');
-
 
 Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('ideas.destroy');
 
 Route::post('/idea/{idea}/comments', [CommentController::class, 'store'])->name('idea.comments.store');
+
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+
+Route::post('/register', [AuthController::class, 'store']);
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+
+Route::post('/login', [AuthController::class, 'authenticate']);
+
+
 
 
 
