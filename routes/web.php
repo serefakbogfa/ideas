@@ -18,31 +18,33 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// 
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/ideas{idea}', [IdeaController::class, 'show'])->name('ideas.show');
+// THE OTHER WAY
 
-Route::get('/ideas{idea}/edit', [IdeaController::class, 'edit'])->name('ideas.edit');
+// Route::group(['prefix' => 'ideas/', 'as' => 'ideas.'], function () {
 
-Route::put('/ideas{idea}', [IdeaController::class, 'update'])->name('ideas.update');
+//     Route::get('{idea}', [IdeaController::class, 'show'])->name('show');
+//     Route::group(['middleware' => ['auth']], function () {//        
 
-Route::post('/idea', [IdeaController::class, 'store'])->name('idea.store');
+//          Route::delete('{idea}', [IdeaController::class, 'destroy'])->name('destroy');
+//          Route::post('', [IdeaController::class, 'store'])->name('store');
+//          Route::get('{idea}/edit', [IdeaController::class, 'edit'])->name('edit');
+//          Route::put('{idea}', [IdeaController::class, 'update'])->name('update');
 
-Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('ideas.destroy');
-
-Route::post('/idea/{idea}/comments', [CommentController::class, 'store'])->name('idea.comments.store');
-
-Route::get('/register', [AuthController::class, 'register'])->name('register');
-
-Route::post('/register', [AuthController::class, 'store']);
-
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-
-Route::post('/login', [AuthController::class, 'authenticate']);
+//         Route::post('{idea}/comments', [CommentController::class, 'store'])->name('comments.store');
+//     });
+// });
 
 
 
+// THE RIGHT WAY
+Route::get('', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::resource('ideas', IdeaController::class)->except(['index', 'create', 'show'])->middleware('auth');
+Route::resource('ideas', IdeaController::class)->only(['show']);
+Route::resource('ideas.comments', CommentController::class)->only(['store'])->middleware('auth');
 
 
 Route::get('/terms', function () {

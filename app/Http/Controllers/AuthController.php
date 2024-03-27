@@ -47,7 +47,7 @@ class AuthController extends Controller
         $validated = request()->validate(
 
             [
-                
+
                 'email' => 'required|email',
                 'password' => 'required|min:8',
             ]
@@ -59,6 +59,15 @@ class AuthController extends Controller
             # code...
         }
         return redirect()->route('login')->withErrors([
-            'email'=>"No matching user found with provided email and password"]);
+            'email' => "No matching user found with provided email and password"
+        ]);
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerate();
+        return redirect()->route('dashboard')->with('success', 'Logout successfully');
     }
 }
