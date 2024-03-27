@@ -34,26 +34,28 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $users)
+    public function show(User $user)
     {
-        return view('users.show', compact('users'));
+        $ideas = $user->ideas()->paginate(5);
+        return view('users.show', compact('user','ideas'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $users)
+    public function edit(User $user)
     {
         $editing =true;
-        return view('users.show', compact('users','editing'));
+        $ideas = $user->ideas()->paginate(5);
+
+        return view('users.show', compact('user','editing','ideas'));
     }
-//11 dakikadan  
     /**
      * Update the specified resource in storage.
      */
-    public function update(User $users)
+    public function update(User $user)
     {
-        return view('users.update', compact('users'));
+        return view('users.update', compact('user'));
     }
 
     /**
