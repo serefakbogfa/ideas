@@ -1,5 +1,5 @@
 @if (@session()->has('success'))
-    @session)
+    @session
 
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
