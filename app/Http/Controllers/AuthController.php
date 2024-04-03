@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TestEmail;
 use App\Models\User;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Contracts\Service\Attribute\Required;
 
 class AuthController extends Controller
@@ -27,13 +29,16 @@ class AuthController extends Controller
             ]
         );
 
-        User::create(
+        $user = User::create(
             [
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
             ]
         );
+           Mail::to($user->email)
+           ->send(new TestEmail($user));
+
         return redirect()->route('dashboard')->with('success', 'Accout created successfully');
     }
 

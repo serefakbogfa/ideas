@@ -1,6 +1,6 @@
 <div class="card mt-3">
-    <div class="card-header pb-0 border-0">
-        <h5 class="">Who to follow</h5>
+    <div class="card-header pb-0 ">
+        <h5 class=" font-weight: bold; text-dark">Who to follow</h5>
     </div>
     <div class="card-body">
         <div class="hstack gap-2 mb-3">
