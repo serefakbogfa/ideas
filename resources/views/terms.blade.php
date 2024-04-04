@@ -23,7 +23,7 @@
                 from a line in section 1.10.32.
             </div>
         </div>  
-        <div class="col-3">
+        <div class="col-3  right-sidebar">
             @include('shared.search-bar')
             @include('shared.follow-box')
 

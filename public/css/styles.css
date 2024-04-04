@@ -1,0 +1,30 @@
+.nav-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    /* Eğer yatay yönde tam genişlik istiyorsanız */
+    background-color: #0f0f0f;
+    /* Arka plan rengi */
+    z-index: 1000;
+    /* Diğer elementlerin üzerinde kalmasını sağlamak için z-index */
+}
+
+.content {
+    margin-top: 60px;
+    /* Nav-bar'ın yüksekliği kadar boşluk bırakın (örnekte 60 piksel) */
+}
+
+@media (max-width: 768px) {
+    .nav-bar {
+        
+    }
+
+    .content {
+      
+    }
+}
+
+
+    body {
+        padding-top: 60px; /* Nav-bar yüksekliği kadar bir boşluk bırak */
+    }

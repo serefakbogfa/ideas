@@ -4,6 +4,7 @@ use App\Http\Controllers\AutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\IdeaLikeController;
@@ -24,25 +25,9 @@ use Illuminate\Support\Facades\Route;
 // 
 
 
-// THE OTHER WAY
-
-// Route::group(['prefix' => 'ideas/', 'as' => 'ideas.'], function () {
-
-//     Route::get('{idea}', [IdeaController::class, 'show'])->name('show');
-//     Route::group(['middleware' => ['auth']], function () {//        
-
-//          Route::delete('{idea}', [IdeaController::class, 'destroy'])->name('destroy');
-//          Route::post('', [IdeaController::class, 'store'])->name('store');
-//          Route::get('{idea}/edit', [IdeaController::class, 'edit'])->name('edit');
-//          Route::put('{idea}', [IdeaController::class, 'update'])->name('update');
-
-//         Route::post('{idea}/comments', [CommentController::class, 'store'])->name('comments.store');
-//     });
-// });
 
 
 
-// THE RIGHT WAY
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('', [DashboardController::class, 'index'])->name('dashboard');
@@ -63,6 +48,7 @@ Route::post('users/{user}/unfollow', [FollowerController::class, 'unfollow'])->m
 Route::post('ideas/{idea}/like', [IdeaLikeController::class, 'like'])->middleware('auth')->name('ideas.like');
 Route::post('ideas/{idea}/unlike', [IdeaLikeController::class, 'unlike'])->middleware('auth')->name('ideas.unlike');
 
+Route::get('/feed', FeedController::class)->name('feed')->middleware('auth')->name('feed');
 
 Route::get('/terms', function () {
     return view('terms');
