@@ -1,9 +1,9 @@
-@extends('layout.layout')
+@extends('layout.app')
 
 @section('content')
     <h1>Terms</h1>
     <div class="row">
-        <div class="col-3">
+        <div class="col-3 left-sidebar">
             @include('shared.left-sidebar')
         </div>
         <div class="col-6">

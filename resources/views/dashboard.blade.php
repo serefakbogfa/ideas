@@ -1,18 +1,18 @@
-@extends('layout.layout')
+@extends('layout.app')
 
 @section('content')
     <div class="row">
-        <div class="col-3">
+        <div class="col-3 left-sidebar">
             @include('shared.left-sidebar')
         </div>
         <div class="col-6">
             @include('shared.success-message')
-            @include('shared.submit-idea')
+            @include('ideas.shared.submit-idea')
             <hr>           
             
             @forelse ($ideas as $idea)
                 <div class="mt-3">
-                    @include('shared.idea-card')
+                    @include('ideas.shared.idea-card')
 
                 </div>
                 @empty

@@ -1,0 +1,84 @@
+.left-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    /* Sabit barın genişliği */
+    height: 100vh;
+    /* Ekran yüksekliği kadar olacak */
+    background-color: #f2f2f2;
+    /* Örnek arka plan rengi */
+}
+
+.right-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px;
+   
+    height: 100vh;
+    
+    background-color: #f2f2f2;
+}
+
+.main-content {
+    margin-left: 200px;
+    
+    margin-right: 200px;
+   
+    padding: 20px;
+   
+    background-color: #fff;
+ 
+}
+
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+}
+
+.left-sidebar,
+.right-sidebar {
+    width: 200px;
+   
+    background-color: #f2f2f2;
+
+    padding: 20px;
+    
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+   
+    background-color: #fff;
+   
+    padding: 20px;
+   
+}
+
+
+.left-sidebar ul,
+.right-sidebar div {
+    list-style-type: none;
+ 
+    padding: 0;
+    margin: 0;
+}
+
+.left-sidebar ul li,
+.right-sidebar div li {
+    margin-bottom: 10px;
+    /* Liste öğeleri arasındaki boşluk */
+}
+
+
+.post {
+    margin-bottom: 20px;
+
+}

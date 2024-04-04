@@ -5,8 +5,8 @@
             @method('put')
             <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
-                    <img style="width:150px" class="me-3 avatar-sm rounded-circle"
-                        src="{{ $user->getImageURL() }}" alt="Mario Avatar">
+                    <img style="width:150px" class="me-3 avatar-sm rounded-circle" src="{{ $user->getImageURL() }}"
+                        alt="Mario Avatar">
                     <div>
 
                         <input name="name" value="{{ $user->name }}" type="text" class="form-control"></input>
@@ -39,15 +39,8 @@
                         <span class="fs-6 text-danger mt-4">{{ $message }}</span>
                     @enderror
                 </div>
-                <button class="btn btn-dark btn-sm mt-3">save</button>
-                <div class="d-flex justify-content-start">
-                    <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-user me-1">
-                        </span> 0 Followers </a>
-                    <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-brain me-1">
-                        </span> {{ $user->ideas()->count() }} </a>
-                    <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-comment me-1">
-                        </span> {{ $user->comments()->count() }} </a>
-                </div>
+                <button class="btn btn-dark btn-sm mt-3">Save</button>
+               @include('users.shared.user-stats')
                 @auth
                     @if (Auth::id() !== $user->id)
                         <div class="mt-3">

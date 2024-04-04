@@ -41,18 +41,21 @@ class UserController extends Controller
         $validated = request()->validate([
             'name' => 'required|min:5|max:40',
             'bio' => 'nullable|min:5|max:240',
-            'image' => 'image'
+            'image' => 'nullable|image'
         ]);
-        if (request()->has('image')) {
-
+    
+        if (request()->hasFile('image')) {
             $imagePath = request()->file('image')->store('profile', 'public');
             $validated['image'] = $imagePath;
-
-            Storage::disk('public')->delete($user->image);
+    
+            // Eski resmi silmek için, kullanıcı daha önce bir resme sahipse ve yeni bir resim yüklenmişse
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image);
+            }
         }
-
+    
         $user->update($validated);
-
+    
         return redirect()->route('profile');
         // return view('users.update', compact('user'));
     }
