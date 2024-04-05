@@ -15,16 +15,17 @@
 }
 
 @media (max-width: 768px) {
-    .nav-bar {
-        
-    }
+    .nav-bar {}
 
-    .content {
-      
-    }
+    .content {}
 }
 
 
-    body {
-        padding-top: 60px; /* Nav-bar yüksekliği kadar bir boşluk bırak */
-    }
+body {
+    padding-top: 60px;
+    /* Nav-bar yüksekliği kadar bir boşluk bırak */
+}
+
+.navbar-nav .nav-link {
+    color: white;
+}

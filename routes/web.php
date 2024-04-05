@@ -11,6 +11,8 @@ use App\Http\Controllers\IdeaLikeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +55,6 @@ Route::get('/feed', FeedController::class)->name('feed')->middleware('auth')->na
 Route::get('/terms', function () {
     return view('terms');
 });
+
+Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware(['auth','admin']);
+
