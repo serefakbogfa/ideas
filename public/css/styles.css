@@ -29,3 +29,6 @@ body {
 .navbar-nav .nav-link {
     color: white;
 }
+.nav-item.spacer {
+    margin-right: 20px; /* İstediğiniz miktarda boşluk ekleyin */
+}

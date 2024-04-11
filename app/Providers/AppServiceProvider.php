@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Pagination\Paginator as PaginationPaginator;
+use App\Models\User;
+use Illuminate\Foundation\Application;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-       PaginationPaginator::useBootstrapFive();
+        Paginator::useBootstrapFive();
+
+       
     }
 }

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title''Post')
+@section('title','Post')
 
 @section('content')
     <div class="row">

@@ -1,17 +1,16 @@
 <?php
 
-use App\Http\Controllers\AutController;
-use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\IdeaLikeController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -26,13 +25,17 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 */
 // 
 
-
-
+Route::get('lang/{lang}', function ($lang) {
+    app()->setLocale($lang);
+    session()->put('locale', $lang);
+    
+    return redirect()->route('dashboard');
+})->name('lang');
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('', [DashboardController::class, 'index'])->name('dashboard-home');
 
 Route::resource('ideas', IdeaController::class)->except(['index', 'create', 'show'])->middleware('auth');
 Route::resource('ideas', IdeaController::class)->only(['show']);
@@ -57,4 +60,5 @@ Route::get('/terms', function () {
 });
 
 Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware(['auth','can:admin , idea.edit , idea.delete']);
+
 

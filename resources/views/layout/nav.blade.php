@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-dark border-bottom border-bottom-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand nav-link " href="/"><span
-                class="fa-solid fa-xmarks-lines me-2"></span>{{ config('app.name') }}</a>
+        <a class="navbar-brand nav-link " href="/"><span class="fa-solid fa-xmarks-lines me-2"></span>{{ config('app.name') }}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,7 +29,7 @@
                         <a class="nav-link {{ Request::is('profile') ? 'active' : '' }}"
                             href="{{ route('profile') }}">{{ Auth::user()->name }}</a>
                     </li>
-                    <li class="nav-item mt-1 me- -1">
+                    <li class="nav-item mt-1 me-3"> <!-- Margin-right  -->
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button class="btn btn-danger btn-sm" type="submit">Logout</button>
@@ -38,6 +37,18 @@
                     </li>
                 @endauth
             </ul>
+            <li class="nav-item mt-1"></li>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    lang
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownMenu">
+                    <a class="dropdown-item" href="{{ route('lang', 'en') }}">English</a>
+                    <a class="dropdown-item" href="{{ route('lang', 'es') }}">Spanish</a>
+                    <a class="dropdown-item" href="{{ route('lang', 'tr') }}">Turkish</a>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
