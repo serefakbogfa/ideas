@@ -1,4 +1,6 @@
 @extends('layout.app')
+@section('title''Dashboard')
+
 
 @section('content')
     <div class="row">
@@ -8,17 +10,17 @@
         <div class="col-6">
             @include('shared.success-message')
             @include('ideas.shared.submit-idea')
-            <hr>           
-            
+            <hr>
+
             @forelse ($ideas as $idea)
                 <div class="mt-3">
                     @include('ideas.shared.idea-card')
 
                 </div>
-                @empty
-               <p class="text-center my-3">No Results Found.</p>
+            @empty
+                <p class="text-center my-3">No Results Found.</p>
             @endforelse
-           
+
             <div class="mt-3">
                 {{ $ideas->withQueryString()->links() }}
             </div>
