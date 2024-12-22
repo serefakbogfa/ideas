@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('ideas', function (Blueprint $table) {
-            $table->dropColumn('likes');
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 
@@ -21,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('ideas', function (Blueprint $table) {
-            $table->unsignedInteger('likes')->default(0);
-
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };

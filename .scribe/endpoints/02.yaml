@@ -1,0 +1,88 @@
+name: 'Quote Tweet Management'
+description: |-
+
+  APIs for managing quote tweets
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: 'api/ideas/{idea_id}/quote'
+    metadata:
+      groupName: 'Quote Tweet Management'
+      groupDescription: |-
+
+        APIs for managing quote tweets
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create a quote tweet'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      idea_id:
+        name: idea_id
+        description: 'The ID of the idea.'
+        required: true
+        example: 11
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      idea:
+        name: idea
+        description: 'The ID of the idea to quote.'
+        required: true
+        example: '1'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      idea_id: 11
+      idea: '1'
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      content:
+        name: content
+        description: 'The content of the quote tweet.'
+        required: true
+        example: 'This is a great idea!'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      content: 'This is a great idea!'
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+           "status": "success",
+           "message": "Quote tweet created successfully",
+           "data": {
+             "id": 1,
+             "user_id": 1,
+             "idea_id": 1,
+             "content": "This is a great idea!",
+             "created_at": "2024-12-22T15:00:00.000000Z",
+             "updated_at": "2024-12-22T15:00:00.000000Z"
+           }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

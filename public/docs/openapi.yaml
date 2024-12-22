@@ -1,0 +1,627 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/documentation:
+    get:
+      summary: 'Display Swagger API page.'
+      operationId: displaySwaggerAPIPage
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>L5 Swagger UI</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"http://localhost/docs/asset/swagger-ui.css?v=0755b7093afdd36d03212b65315f0209\">\n    <link rel=\"icon\" type=\"image/png\" href=\"http://localhost/docs/asset/favicon-32x32.png?v=40d4f2c38d1cd854ad463f16373cbcb6\" sizes=\"32x32\"/>\n    <link rel=\"icon\" type=\"image/png\" href=\"http://localhost/docs/asset/favicon-16x16.png?v=f0ae831196d55d8f4115b6c5e8ec5384\" sizes=\"16x16\"/>\n    <style>\n    html\n    {\n        box-sizing: border-box;\n        overflow: -moz-scrollbars-vertical;\n        overflow-y: scroll;\n    }\n    *,\n    *:before,\n    *:after\n    {\n        box-sizing: inherit;\n    }\n\n    body {\n      margin:0;\n      background: #fafafa;\n    }\n    </style>\n    </head>\n\n<body >\n<div id=\"swagger-ui\"></div>\n\n<script src=\"http://localhost/docs/asset/swagger-ui-bundle.js?v=6c23777357d2beae9650f9aa035d93fb\"></script>\n<script src=\"http://localhost/docs/asset/swagger-ui-standalone-preset.js?v=6b2892eb9458da5c3224817b3984d14c\"></script>\n<script>\n    window.onload = function() {\n        // Build a system\n        const ui = SwaggerUIBundle({\n            dom_id: '#swagger-ui',\n            url: \"http://localhost/docs/api-docs.json\",\n            operationsSorter: null,\n            configUrl: null,\n            validatorUrl: null,\n            oauth2RedirectUrl: \"http://localhost/api/oauth2-callback\",\n\n            requestInterceptor: function(request) {\n                request.headers['X-CSRF-TOKEN'] = '';\n                return request;\n            },\n\n            presets: [\n                SwaggerUIBundle.presets.apis,\n                SwaggerUIStandalonePreset\n            ],\n\n            plugins: [\n                SwaggerUIBundle.plugins.DownloadUrl\n            ],\n\n            layout: \"StandaloneLayout\",\n            docExpansion : \"none\",\n            deepLinking: true,\n            filter: true,\n            persistAuthorization: \"false\",\n\n        })\n\n        window.ui = ui\n\n            }\n</script>\n</body>\n</html>\n"
+      tags:
+        - Endpoints
+      security: []
+  /api/oauth2-callback:
+    get:
+      summary: 'Display Oauth2 callback pages.'
+      operationId: displayOauth2CallbackPages
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!doctype html>\n<html lang=\"en-US\">\n<head>\n    <title>Swagger UI: OAuth2 Redirect</title>\n</head>\n<body>\n<script>\n    'use strict';\n    function run () {\n        var oauth2 = window.opener.swaggerUIRedirectOauth2;\n        var sentState = oauth2.state;\n        var redirectUrl = oauth2.redirectUrl;\n        var isValid, qp, arr;\n\n        if (/code|token|error/.test(window.location.hash)) {\n            qp = window.location.hash.substring(1).replace('?', '&');\n        } else {\n            qp = location.search.substring(1);\n        }\n\n        arr = qp.split(\"&\");\n        arr.forEach(function (v,i,_arr) { _arr[i] = '\"' + v.replace('=', '\":\"') + '\"';});\n        qp = qp ? JSON.parse('{' + arr.join() + '}',\n                function (key, value) {\n                    return key === \"\" ? value : decodeURIComponent(value);\n                }\n        ) : {};\n\n        isValid = qp.state === sentState;\n\n        if ((\n          oauth2.auth.schema.get(\"flow\") === \"accessCode\" ||\n          oauth2.auth.schema.get(\"flow\") === \"authorizationCode\" ||\n          oauth2.auth.schema.get(\"flow\") === \"authorization_code\"\n        ) && !oauth2.auth.code) {\n            if (!isValid) {\n                oauth2.errCb({\n                    authId: oauth2.auth.name,\n                    source: \"auth\",\n                    level: \"warning\",\n                    message: \"Authorization may be unsafe, passed state was changed in server. The passed state wasn't returned from auth server.\"\n                });\n            }\n\n            if (qp.code) {\n                delete oauth2.state;\n                oauth2.auth.code = qp.code;\n                oauth2.callback({auth: oauth2.auth, redirectUrl: redirectUrl});\n            } else {\n                let oauthErrorMsg;\n                if (qp.error) {\n                    oauthErrorMsg = \"[\"+qp.error+\"]: \" +\n                        (qp.error_description ? qp.error_description+ \". \" : \"no accessCode received from the server. \") +\n                        (qp.error_uri ? \"More info: \"+qp.error_uri : \"\");\n                }\n\n                oauth2.errCb({\n                    authId: oauth2.auth.name,\n                    source: \"auth\",\n                    level: \"error\",\n                    message: oauthErrorMsg || \"[Authorization failed]: no accessCode received from the server.\"\n                });\n            }\n        } else {\n            oauth2.callback({auth: oauth2.auth, token: qp, isValid: isValid, redirectUrl: redirectUrl});\n        }\n        window.close();\n    }\n\n    if (document.readyState !== 'loading') {\n        run();\n    } else {\n        document.addEventListener('DOMContentLoaded', function () {\n            run();\n        });\n    }\n</script>\n</body>\n</html>\n"
+      tags:
+        - Endpoints
+      security: []
+  /api/ideas:
+    get:
+      summary: ''
+      operationId: getApiIdeas
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiIdeas
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: qjrgtzwtcisxavsdkeieka
+                  nullable: false
+                image:
+                  type: string
+                  format: binary
+                  description: 'Must be an image. Must not be greater than 2048 kilobytes.'
+                  nullable: true
+              required:
+                - content
+      security: []
+  '/api/ideas/{id}':
+    put:
+      summary: ''
+      operationId: putApiIdeasId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: lmdqsblvaeulgoezbzkbixgk
+                  nullable: false
+                image:
+                  type: string
+                  format: binary
+                  description: 'Must be an image. Must not be greater than 2048 kilobytes.'
+                  nullable: true
+              required:
+                - content
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiIdeasId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the idea.'
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/media/upload:
+    post:
+      summary: 'Upload a file'
+      operationId: uploadAFile
+      description: 'Upload an image or video file. Supported formats: jpg, jpeg, png, gif, mp4'
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'File uploaded successfully'
+                  data:
+                    path: media/abc123.jpg
+                    url: 'http://localhost/storage/media/abc123.jpg'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'File uploaded successfully'
+                  data:
+                    type: object
+                    properties:
+                      path:
+                        type: string
+                        example: media/abc123.jpg
+                      url:
+                        type: string
+                        example: 'http://localhost/storage/media/abc123.jpg'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'The file must be an image or video file'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'The file must be an image or video file'
+      tags:
+        - 'Media Management'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 'The file to upload. Must be an image (jpg, jpeg, png, gif) or video (mp4). Maximum size: 10MB.'
+                  nullable: false
+              required:
+                - file
+      security: []
+  '/api/media/{filename}':
+    delete:
+      summary: 'Delete a file'
+      operationId: deleteAFile
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'File deleted successfully'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'File deleted successfully'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'File not found'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'File not found'
+      tags:
+        - 'Media Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: filename
+        description: 'The name of the file to delete.'
+        example: abc123.jpg
+        required: true
+        schema:
+          type: string
+  /api/notifications:
+    get:
+      summary: 'Get all notifications'
+      operationId: getAllNotifications
+      description: 'Returns a paginated list of notifications for the authenticated user'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Notifications retrieved successfully'
+                  data:
+                    current_page: 1
+                    data:
+                      -
+                        id: 1
+                        type: retweet
+                        notifiable_type: App\Models\User
+                        notifiable_id: 1
+                        data:
+                          message: 'Someone retweeted your tweet'
+                        read_at: null
+                        created_at: '2024-12-22T15:00:00.000000Z'
+                        updated_at: '2024-12-22T15:00:00.000000Z'
+                    first_page_url: 'http://localhost/api/notifications?page=1'
+                    from: 1
+                    last_page: 1
+                    per_page: 20
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Notifications retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      data:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            type: retweet
+                            notifiable_type: App\Models\User
+                            notifiable_id: 1
+                            data:
+                              message: 'Someone retweeted your tweet'
+                            read_at: null
+                            created_at: '2024-12-22T15:00:00.000000Z'
+                            updated_at: '2024-12-22T15:00:00.000000Z'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            type:
+                              type: string
+                              example: retweet
+                            notifiable_type:
+                              type: string
+                              example: App\Models\User
+                            notifiable_id:
+                              type: integer
+                              example: 1
+                            data:
+                              type: object
+                              properties:
+                                message:
+                                  type: string
+                                  example: 'Someone retweeted your tweet'
+                            read_at:
+                              type: string
+                              example: null
+                            created_at:
+                              type: string
+                              example: '2024-12-22T15:00:00.000000Z'
+                            updated_at:
+                              type: string
+                              example: '2024-12-22T15:00:00.000000Z'
+                      first_page_url:
+                        type: string
+                        example: 'http://localhost/api/notifications?page=1'
+                      from:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      per_page:
+                        type: integer
+                        example: 20
+      tags:
+        - 'Notification Management'
+      security: []
+  '/api/notifications/{notification_id}/read':
+    put:
+      summary: 'Mark a notification as read'
+      operationId: markANotificationAsRead
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Notification marked as read'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Notification marked as read'
+      tags:
+        - 'Notification Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: notification_id
+        description: 'The ID of the notification.'
+        example: 18
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: notification
+        description: 'The ID of the notification.'
+        example: '1'
+        required: true
+        schema:
+          type: string
+  /api/notifications/mark-all-read:
+    put:
+      summary: ''
+      operationId: putApiNotificationsMarkAllRead
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Notification Management'
+      security: []
+  '/api/ideas/{idea_id}/quote':
+    post:
+      summary: 'Create a quote tweet'
+      operationId: createAQuoteTweet
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Quote tweet created successfully'
+                  data:
+                    id: 1
+                    user_id: 1
+                    idea_id: 1
+                    content: 'This is a great idea!'
+                    created_at: '2024-12-22T15:00:00.000000Z'
+                    updated_at: '2024-12-22T15:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Quote tweet created successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      idea_id:
+                        type: integer
+                        example: 1
+                      content:
+                        type: string
+                        example: 'This is a great idea!'
+                      created_at:
+                        type: string
+                        example: '2024-12-22T15:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-12-22T15:00:00.000000Z'
+      tags:
+        - 'Quote Tweet Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 'The content of the quote tweet.'
+                  example: 'This is a great idea!'
+                  nullable: false
+              required:
+                - content
+      security: []
+    parameters:
+      -
+        in: path
+        name: idea_id
+        description: 'The ID of the idea.'
+        example: 11
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: idea
+        description: 'The ID of the idea to quote.'
+        example: '1'
+        required: true
+        schema:
+          type: string
+  '/api/ideas/{idea_id}/retweet':
+    post:
+      summary: 'Retweet an idea'
+      operationId: retweetAnIdea
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Retweeted successfully'
+                  data:
+                    id: 1
+                    user_id: 1
+                    idea_id: 1
+                    created_at: '2024-12-22T15:00:00.000000Z'
+                    updated_at: '2024-12-22T15:00:00.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Retweeted successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      idea_id:
+                        type: integer
+                        example: 1
+                      created_at:
+                        type: string
+                        example: '2024-12-22T15:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-12-22T15:00:00.000000Z'
+      tags:
+        - 'Retweet Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: idea_id
+        description: 'The ID of the idea.'
+        example: 17
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: idea
+        description: 'The ID of the idea to retweet.'
+        example: '1'
+        required: true
+        schema:
+          type: string
+  '/api/ideas/{idea_id}/unretweet':
+    delete:
+      summary: 'Remove a retweet'
+      operationId: removeARetweet
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Unretweet successful'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Unretweet successful'
+      tags:
+        - 'Retweet Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: idea_id
+        description: 'The ID of the idea.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: idea
+        description: 'The ID of the idea to unretweet.'
+        example: '1'
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Endpoints
+    description: ''
+  -
+    name: 'Media Management'
+    description: "\nAPIs for managing media uploads (images, videos)"
+  -
+    name: 'Notification Management'
+    description: "\nAPIs for managing notifications"
+  -
+    name: 'Quote Tweet Management'
+    description: "\nAPIs for managing quote tweets"
+  -
+    name: 'Retweet Management'
+    description: "\nAPIs for managing retweets"

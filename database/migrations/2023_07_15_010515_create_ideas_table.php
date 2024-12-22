@@ -17,9 +17,10 @@ return new class extends Migration
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('content');
-            $table->unsignedInteger('likes')->default(0);
+            $table->text('content');
+            $table->string('image')->nullable();
+            $table->integer('likes_count')->default(0);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

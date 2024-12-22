@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redis;
 
 
 /*
@@ -60,5 +61,15 @@ Route::get('/terms', function () {
 });
 
 Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware(['auth','can:admin , idea.edit , idea.delete']);
+
+Route::get('/redis-test', function () {
+    try {
+        Redis::set('test', 'Hello Redis!');
+        $value = Redis::get('test');
+        return "Redis Test: " . $value;
+    } catch (\Exception $e) {
+        return "Redis Error: " . $e->getMessage();
+    }
+});
 
 
